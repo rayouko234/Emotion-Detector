@@ -30,6 +30,10 @@ EMOTIONS = ("anger", "disgust", "fear", "joy", "sadness")
 REQUEST_TIMEOUT = 30
 
 logger = logging.getLogger(__name__)
+# A library logger must not emit output on its own: the NullHandler keeps
+# failed-request warnings out of ad-hoc console usage, while still passing
+# them to any logging configuration set up by the application.
+logger.addHandler(logging.NullHandler())
 
 
 def emotion_detector(text_to_analyse):
