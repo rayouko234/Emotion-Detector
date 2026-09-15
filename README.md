@@ -65,8 +65,8 @@ score.
    ```
 
 > **Note:** the emotion endpoint (`sn-watson-emotion.labs.skills.network`)
-> is hosted by the Skills Network environment and must be reachable from
-> where the application runs.
+> only resolves inside the Skills Network lab network. See
+> [Troubleshooting](#troubleshooting) if requests fail on your own machine.
 
 ## Running the application
 
@@ -98,6 +98,28 @@ The five emotion tests call the real Watson NLP service and therefore require
 access to the Skills Network endpoint. The input-validation and error-handling
 tests run offline.
 
+## Troubleshooting
+
+### `emotion_detector` returns `None` values / "No route to host"
+
+The Watson NLP hostname `sn-watson-emotion.labs.skills.network` resolves to
+private IBM addresses (e.g. `10.241.x.x`) that are **only reachable from
+inside the Skills Network lab environment**. On a normal machine the call
+fails and `emotion_detector` returns the error dictionary with every value
+set to `None`:
+
+```python
+{
+    "anger": None, "disgust": None, "fear": None,
+    "joy": None, "sadness": None, "dominant_emotion": None,
+}
+```
+
+This is the expected error representation and not a crash. To get real
+results, run the application and the unit tests from the Skills Network
+Cloud IDE lab session — the endpoint needs no API key, but it cannot be
+reached from the public internet.
+
 ## Static analysis
 
 Run `pylint` on the project:
@@ -124,11 +146,13 @@ Emotion-Detector/
 
 * **`EmotionDetection/emotion_detection.py`** — implements
   `emotion_detector(text_to_analyse)`, which calls the Watson NLP Emotion
-  Predict service, reads the five emotion scores from the response, computes
-  the dominant emotion and returns a dictionary of the form
+  Predict service, reads the five emotion scores from the actual response
+  (under `emotionPredictions[0].emotion`), computes the dominant emotion and
+  returns a dictionary of the form
   `{"anger": ..., "disgust": ..., "fear": ..., "joy": ..., "sadness": ...,
-  "dominant_emotion": "..."}`. It returns `None` when the input is invalid or
-  the service request fails.
+  "dominant_emotion": "..."}`. When the input is invalid or the service
+  cannot be reached / returns an error, it returns the same dictionary with
+  every value set to `None`.
 * **`EmotionDetection/__init__.py`** — makes `EmotionDetection` an importable
   package and exposes `emotion_detector`.
 * **`test_emotion_detection.py`** — unit tests covering all five emotions,

@@ -24,8 +24,9 @@ EMOTION_LABELS = (
 
 BLANK_INPUT_MESSAGE = "Please enter some text to analyze."
 ANALYSIS_FAILED_MESSAGE = (
-    "Sorry, we could not analyse that text. "
-    "Please try again with a different sentence."
+    "Sorry, we could not analyse that text. The Watson NLP service is "
+    "unavailable from this environment. Please run the app inside the "
+    "Skills Network lab and try again."
 )
 
 INDEX_TEMPLATE = """
@@ -232,7 +233,7 @@ def index():
             message = BLANK_INPUT_MESSAGE
         else:
             result = emotion_detector(text_to_analyse)
-            if result is None:
+            if result is None or result.get("dominant_emotion") is None:
                 message = ANALYSIS_FAILED_MESSAGE
             else:
                 scores = _format_scores(result)
