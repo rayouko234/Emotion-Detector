@@ -1,0 +1,8 @@
+# Emotion Detector dependencies
+#
+# Flask - web application framework used by server.py
+Flask==3.0.3
+# Requests - HTTP client used to call the Watson NLP Emotion Predict service
+requests==2.31.0
+# Pylint - static code analysis
+pylint==3.2.6

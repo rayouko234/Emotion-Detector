@@ -1,0 +1,58 @@
+# Python byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+.hypothesis/
+htmlcov/
+
+# Editors / IDEs
+.vscode/
+.idea/
+
+# Environments / secrets - never commit credentials or API keys
+.env
+.env.*
+*.pem
+*.key
+credentials*.json
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
